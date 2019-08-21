@@ -1,3 +1,31 @@
+var leftCheckList = [
+    { index: 0, toCheck: [1, 2, 3] },
+    { index: 1, toCheck: [2, 3] },
+    { index: 2, toCheck: [3] },
+    { index: 4, toCheck: [5, 6, 7] },
+    { index: 5, toCheck: [6, 7] },
+    { index: 6, toCheck: [7] },
+    { index: 8, toCheck: [9, 10, 11] },
+    { index: 9, toCheck: [10, 11] },
+    { index: 10, toCheck: [11] },
+    { index: 12, toCheck: [13, 14, 15] },
+    { index: 13, toCheck: [14, 15] },
+    { index: 14, toCheck: [15] }
+];
+var rightCheckList = [
+    { index: 3, toCheck: [2, 1, 0] },
+    { index: 2, toCheck: [1, 0] },
+    { index: 1, toCheck: [0] },
+    { index: 7, toCheck: [6, 5, 4] },
+    { index: 6, toCheck: [5, 4] },
+    { index: 5, toCheck: [4] },
+    { index: 11, toCheck: [10, 9, 8] },
+    { index: 10, toCheck: [9, 8] },
+    { index: 9, toCheck: [8] },
+    { index: 15, toCheck: [14, 13, 12] },
+    { index: 14, toCheck: [13, 12] },
+    { index: 13, toCheck: [12] }
+];
 var Game = (function () {
     function Game() {
     }
@@ -18,6 +46,7 @@ var Game = (function () {
     };
     Game.prototype.draw = function () {
         var _this = this;
+        background("grey");
         this.tiles.forEach(function (tileValue, index) {
             _this.drawTile(tileValue, index);
         });
@@ -39,8 +68,47 @@ var Game = (function () {
         }
     };
     Game.prototype.handleMouseClicked = function () {
-        game.placeTile();
         game.draw();
+    };
+    Game.prototype.handleKeyPressed = function () {
+        var tilesMoved = this.moveTiles(keyCode);
+        if (tilesMoved) {
+            this.placeTile();
+        }
+        this.draw();
+    };
+    Game.prototype.moveTiles = function (direction) {
+        var _this = this;
+        var tilesMoved = false;
+        var checkArray;
+        switch (keyCode) {
+            case LEFT_ARROW:
+                checkArray = leftCheckList;
+                break;
+            case RIGHT_ARROW:
+                checkArray = rightCheckList;
+                break;
+            default:
+                return false;
+        }
+        checkArray.forEach(function (checkInfo) {
+            var tileIndex = checkInfo.index;
+            var tilesToCheck = checkInfo.toCheck;
+            if (_this.tiles[tileIndex] === null) {
+                var newTileValue = void 0;
+                for (var _i = 0, tilesToCheck_1 = tilesToCheck; _i < tilesToCheck_1.length; _i++) {
+                    var newTileIndex = tilesToCheck_1[_i];
+                    newTileValue = _this.tiles[newTileIndex];
+                    if (newTileValue !== null) {
+                        _this.tiles[tileIndex] = newTileValue;
+                        _this.tiles[newTileIndex] = null;
+                        tilesMoved = true;
+                        break;
+                    }
+                }
+            }
+        });
+        return tilesMoved;
     };
     Game.prototype.placeTile = function () {
         var freeIndex = null;
@@ -53,7 +121,6 @@ var Game = (function () {
         var value = Math.random() > 0.8 ? 4 : 2;
         this.tiles[freeIndex] = value;
     };
-    Game.prototype.moveTiles = function () { };
     return Game;
 }());
 var Morph = (function () {
@@ -180,16 +247,19 @@ var Shapes = (function () {
 var game;
 function setup() {
     createCanvas(windowWidth, windowHeight);
-    background("grey");
     game = new Game();
     game.setup();
-    game.draw();
 }
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
 }
-function draw() { }
+function draw() {
+    game.draw();
+}
 function mouseClicked() {
     game.handleMouseClicked();
+}
+function keyPressed() {
+    game.handleKeyPressed();
 }
 //# sourceMappingURL=build.js.map

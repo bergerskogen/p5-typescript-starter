@@ -22,6 +22,7 @@ class Game {
   }
 
   draw() {
+    background("grey");
     this.tiles.forEach((tileValue, index) => {
       this.drawTile(tileValue, index);
     });
@@ -47,8 +48,69 @@ class Game {
     }
   }
   handleMouseClicked() {
-    game.placeTile();
     game.draw();
+  }
+
+  handleKeyPressed() {
+    const tilesMoved: boolean = this.moveTiles(keyCode);
+    if (tilesMoved) {
+      this.placeTile();
+    }
+    this.draw();
+  }
+
+  moveTiles(direction: number): boolean {
+    let tilesMoved: boolean = false;
+
+    let checkArray: any[];
+    switch (keyCode) {
+      case LEFT_ARROW:
+        checkArray = leftCheckList;
+        break;
+      case RIGHT_ARROW:
+        checkArray = rightCheckList;
+        break;
+
+      default:
+        return false;
+    }
+
+    checkArray.forEach(checkInfo => {
+      const tileIndex = checkInfo.index;
+      const tilesToCheck = checkInfo.toCheck;
+      if (this.tiles[tileIndex] === null) {
+        let newTileValue: number;
+        for (let newTileIndex of tilesToCheck) {
+          newTileValue = this.tiles[newTileIndex];
+          if (newTileValue !== null) {
+            this.tiles[tileIndex] = newTileValue;
+            this.tiles[newTileIndex] = null;
+            tilesMoved = true;
+            break;
+          }
+        }
+      }
+    });
+
+    // for (let tileIndex = 0; tileIndex < this.tiles.length; tileIndex++) {
+    //   if (this.tiles[tileIndex] !== null) {
+    //     continue;
+    //   }
+    //   let newTileIndex: number = tileIndex;
+    //   let newTileValue: number;
+    //   while (newTileIndex % 4 !== 3) {
+    //     newTileIndex++;
+    //     newTileValue = this.tiles[newTileIndex];
+    //     if (newTileValue !== null) {
+    //       this.tiles[tileIndex] = newTileValue;
+    //       this.tiles[newTileIndex] = null;
+    //       tilesMoved = true;
+    //       break;
+    //     }
+    //   }
+    // }
+
+    return tilesMoved;
   }
 
   private placeTile() {
@@ -62,6 +124,4 @@ class Game {
     const value: number = Math.random() > 0.8 ? 4 : 2;
     this.tiles[freeIndex] = value;
   }
-
-  moveTiles() {}
 }
