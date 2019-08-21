@@ -12,16 +12,44 @@ class Morph {
     // Setup shapes array
     this.shapes = [];
     this.currentShape = 0;
-    this.shapes.push({ points: Shapes.circle(100), color: color("#009CDF") });
-    this.shapes.push({ points: Shapes.circle(150), color: color(255, 204, 0) });
-    this.shapes.push({
-      points: Shapes.square(50),
-      color: color(175, 100, 220)
-    });
-    this.shapes.push({
-      points: Shapes.star(0, 0, 30, 70, 5),
-      color: color("#E23838")
-    });
+
+    const maxSize = min(windowHeight / 2 - 50, windowWidth / 2 - 50);
+    const increment = 50;
+    for (let size = increment; size < maxSize; size += increment) {
+      this.shapes.push({
+        points: Shapes.triangle(size),
+        color: color("yellow")
+      });
+      this.shapes.push({
+        points: Shapes.circle(size),
+        color: color("blue")
+      });
+      this.shapes.push({ points: Shapes.square(size), color: color("red") });
+    }
+    for (let size = maxSize; size > increment; size -= increment) {
+      this.shapes.push({
+        points: Shapes.triangle(size),
+        color: color("white")
+      });
+      this.shapes.push({ points: Shapes.square(size), color: color("black") });
+    }
+    // this.shapes.push({ points: Shapes.triangle(100), color: color("white") });
+
+    // this.shapes.push({ points: Shapes.circle(100), color: color("#009CDF") });
+    // this.shapes.push({ points: Shapes.circle(150), color: color(255, 204, 0) });
+    // this.shapes.push({
+    //   points: Shapes.square(50),
+    //   color: color(175, 100, 220)
+    // });
+    // this.shapes.push({
+    //   points: Shapes.star(0, 0, 30, 70, 5),
+    //   color: color("#E23838")
+    // });
+
+    // this.shapes.push({
+    //   points: Shapes.star(0, 0, 30, 70, 7),
+    //   color: color("#38E238")
+    // });
 
     // setup morph array
     this.morph = new Array<p5.Vector>();

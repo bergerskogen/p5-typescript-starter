@@ -4,16 +4,26 @@ var Morph = (function () {
     Morph.prototype.setup = function () {
         this.shapes = [];
         this.currentShape = 0;
-        this.shapes.push({ points: Shapes.circle(100), color: color("#009CDF") });
-        this.shapes.push({ points: Shapes.circle(150), color: color(255, 204, 0) });
-        this.shapes.push({
-            points: Shapes.square(50),
-            color: color(175, 100, 220)
-        });
-        this.shapes.push({
-            points: Shapes.star(0, 0, 30, 70, 5),
-            color: color("#E23838")
-        });
+        var maxSize = min(windowHeight / 2 - 50, windowWidth / 2 - 50);
+        var increment = 50;
+        for (var size = increment; size < maxSize; size += increment) {
+            this.shapes.push({
+                points: Shapes.triangle(size),
+                color: color("yellow")
+            });
+            this.shapes.push({
+                points: Shapes.circle(size),
+                color: color("blue")
+            });
+            this.shapes.push({ points: Shapes.square(size), color: color("red") });
+        }
+        for (var size = maxSize; size > increment; size -= increment) {
+            this.shapes.push({
+                points: Shapes.triangle(size),
+                color: color("white")
+            });
+            this.shapes.push({ points: Shapes.square(size), color: color("black") });
+        }
         this.morph = new Array();
         var highestCount = 0;
         for (var i = 0; i < this.shapes.length; i++) {
@@ -84,6 +94,15 @@ var Shapes = (function () {
         }
         return points;
     };
+    Shapes.triangle = function (size) {
+        var points = new Array();
+        var tanAngle = tan(TWO_PI / 6);
+        var halfWidth = Math.round((size * sin(PI / 6)) / 10) * 10;
+        for (var x = -halfWidth; x <= halfWidth; x += 10) {
+            points.push(createVector(x, halfWidth - (halfWidth - abs(x)) * tanAngle));
+        }
+        return points;
+    };
     Shapes.star = function (x, y, radius1, radius2, npoints) {
         var angle = TWO_PI / npoints;
         var halfAngle = angle / 2.0;
@@ -103,14 +122,14 @@ var Shapes = (function () {
 var morph;
 function setup() {
     createCanvas(windowWidth, windowHeight);
-    morph = new Morph();
-    morph.setup();
+    background(100);
+    textSize(50);
+    rect(500, 500, 500, 500);
+    textSize(50);
+    text("Test", 750, 750);
 }
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
 }
-function draw() {
-    background(100);
-    morph.draw();
-}
+function draw() { }
 //# sourceMappingURL=build.js.map
