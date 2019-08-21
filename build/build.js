@@ -4,9 +4,16 @@ var Morph = (function () {
     Morph.prototype.setup = function () {
         this.shapes = [];
         this.currentShape = 0;
-        this.shapes.push({ points: Shapes.circle(100), color: color('#009CDF') });
+        this.shapes.push({ points: Shapes.circle(100), color: color("#009CDF") });
         this.shapes.push({ points: Shapes.circle(150), color: color(255, 204, 0) });
-        this.shapes.push({ points: Shapes.square(50), color: color(175, 100, 220) });
+        this.shapes.push({
+            points: Shapes.square(50),
+            color: color(175, 100, 220)
+        });
+        this.shapes.push({
+            points: Shapes.star(0, 0, 30, 70, 5),
+            color: color("#E23838")
+        });
         this.morph = new Array();
         var highestCount = 0;
         for (var i = 0; i < this.shapes.length; i++) {
