@@ -1,15 +1,18 @@
-let morph: Morph;
+let game: Game;
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  morph = new Morph();
-  morph.setup();
+  background("grey");
+  game = new Game();
+  game.setup();
+  game.draw();
 }
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 
-function draw() {
-  background(100);
-  morph.draw();
+function draw() {}
+
+function mouseClicked() {
+  game.handleMouseClicked();
 }

@@ -1,3 +1,61 @@
+var Game = (function () {
+    function Game() {
+    }
+    Game.prototype.setup = function (gameSize) {
+        if (gameSize === void 0) { gameSize = 800; }
+        this.tileSize = Math.floor(gameSize / 4);
+        this.x = (windowWidth - gameSize) / 2;
+        this.y = (windowHeight - gameSize) / 2;
+        this.tiles = new Array(16);
+        for (var i = 0; i < 16; i++) {
+            this.tiles[i] = null;
+        }
+        var index = Math.floor(Math.random() * 16);
+        this.tiles[index] = 2;
+        textAlign(CENTER);
+        textSize(this.tileSize / 4);
+        textStyle(BOLD);
+    };
+    Game.prototype.draw = function () {
+        var _this = this;
+        this.tiles.forEach(function (tileValue, index) {
+            _this.drawTile(tileValue, index);
+        });
+    };
+    Game.prototype.drawTile = function (tileValue, index) {
+        var x = this.x + this.tileSize * (index % 4);
+        var y = this.y + this.tileSize * Math.floor(index / 4);
+        if (tileValue !== null) {
+            var greenValue = 255 - (16 * Math.log(tileValue)) / Math.log(2);
+            fill(255, greenValue, 0);
+        }
+        else {
+            fill("white");
+        }
+        rect(x, y, this.tileSize - 5, this.tileSize - 5);
+        if (tileValue !== null) {
+            fill("black");
+            text(tileValue.toString(), x + this.tileSize / 2, y + this.tileSize / 2 + 10);
+        }
+    };
+    Game.prototype.handleMouseClicked = function () {
+        game.placeTile();
+        game.draw();
+    };
+    Game.prototype.placeTile = function () {
+        var freeIndex = null;
+        while (freeIndex === null) {
+            var index = Math.floor(Math.random() * 16);
+            if (this.tiles[index] === null) {
+                freeIndex = index;
+            }
+        }
+        var value = Math.random() > 0.8 ? 4 : 2;
+        this.tiles[freeIndex] = value;
+    };
+    Game.prototype.moveTiles = function () { };
+    return Game;
+}());
 var Morph = (function () {
     function Morph() {
     }
@@ -119,17 +177,19 @@ var Shapes = (function () {
     };
     return Shapes;
 }());
-var morph;
+var game;
 function setup() {
     createCanvas(windowWidth, windowHeight);
-    background(100);
-    textSize(50);
-    rect(500, 500, 500, 500);
-    textSize(50);
-    text("Test", 750, 750);
+    background("grey");
+    game = new Game();
+    game.setup();
+    game.draw();
 }
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
 }
 function draw() { }
+function mouseClicked() {
+    game.handleMouseClicked();
+}
 //# sourceMappingURL=build.js.map
