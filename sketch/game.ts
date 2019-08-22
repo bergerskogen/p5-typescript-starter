@@ -15,9 +15,8 @@ class Game {
     }
     const index = Math.floor(Math.random() * 16);
     this.tiles[index] = 2;
-
     textAlign(CENTER);
-    textSize(this.tileSize / 4);
+    textSize(this.tileSize / 2.5);
     textStyle(BOLD);
   }
 
@@ -43,12 +42,9 @@ class Game {
       text(
         tileValue.toString(),
         x + this.tileSize / 2,
-        y + this.tileSize / 2 + 10
+        y + this.tileSize / 2 + 20
       );
     }
-  }
-  handleMouseClicked() {
-    game.draw();
   }
 
   handleKeyPressed() {

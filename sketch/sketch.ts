@@ -13,10 +13,6 @@ function draw() {
   game.draw();
 }
 
-function mouseClicked() {
-  game.handleMouseClicked();
-}
-
 function keyPressed() {
   game.handleKeyPressed();
 }

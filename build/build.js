@@ -69,7 +69,7 @@ var Game = (function () {
         var index = Math.floor(Math.random() * 16);
         this.tiles[index] = 2;
         textAlign(CENTER);
-        textSize(this.tileSize / 4);
+        textSize(this.tileSize / 2.5);
         textStyle(BOLD);
     };
     Game.prototype.draw = function () {
@@ -92,11 +92,8 @@ var Game = (function () {
         rect(x, y, this.tileSize - 5, this.tileSize - 5);
         if (tileValue !== null) {
             fill("black");
-            text(tileValue.toString(), x + this.tileSize / 2, y + this.tileSize / 2 + 10);
+            text(tileValue.toString(), x + this.tileSize / 2, y + this.tileSize / 2 + 20);
         }
-    };
-    Game.prototype.handleMouseClicked = function () {
-        game.draw();
     };
     Game.prototype.handleKeyPressed = function () {
         var tilesMoved = this.moveTiles(keyCode);
@@ -301,9 +298,6 @@ function windowResized() {
 }
 function draw() {
     game.draw();
-}
-function mouseClicked() {
-    game.handleMouseClicked();
 }
 function keyPressed() {
     game.handleKeyPressed();
