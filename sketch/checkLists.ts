@@ -55,7 +55,7 @@ const downCheckList = [
   { index: 10, toCheck: [14] },
   { index: 6, toCheck: [10, 14] },
   { index: 2, toCheck: [6, 10, 14] },
-  { index: 11, toCheck: [3] },
-  { index: 7, toCheck: [11, 3] },
-  { index: 2, toCheck: [15, 11, 3] }
+  { index: 11, toCheck: [15] },
+  { index: 7, toCheck: [11, 15] },
+  { index: 3, toCheck: [7, 11, 15] }
 ];

@@ -50,9 +50,9 @@ var downCheckList = [
     { index: 10, toCheck: [14] },
     { index: 6, toCheck: [10, 14] },
     { index: 2, toCheck: [6, 10, 14] },
-    { index: 11, toCheck: [3] },
-    { index: 7, toCheck: [11, 3] },
-    { index: 2, toCheck: [15, 11, 3] }
+    { index: 11, toCheck: [15] },
+    { index: 7, toCheck: [11, 15] },
+    { index: 3, toCheck: [7, 11, 15] }
 ];
 var Game = (function () {
     function Game() {
@@ -69,7 +69,7 @@ var Game = (function () {
         var index = Math.floor(Math.random() * 16);
         this.tiles[index] = 2;
         textAlign(CENTER);
-        textSize(this.tileSize / 2.5);
+        textSize(this.tileSize / 3);
         textStyle(BOLD);
     };
     Game.prototype.draw = function () {
@@ -83,11 +83,11 @@ var Game = (function () {
         var x = this.x + this.tileSize * (index % 4);
         var y = this.y + this.tileSize * Math.floor(index / 4);
         if (tileValue !== null) {
-            var greenValue = 255 - (16 * Math.log(tileValue)) / Math.log(2);
+            var greenValue = 255 - (20 * Math.log(tileValue)) / Math.log(2);
             fill(255, greenValue, 0);
         }
         else {
-            fill("white");
+            fill("lightgray");
         }
         rect(x, y, this.tileSize - 5, this.tileSize - 5);
         if (tileValue !== null) {
