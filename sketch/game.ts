@@ -70,24 +70,48 @@ class Game {
       case RIGHT_ARROW:
         checkArray = rightCheckList;
         break;
-
+      case UP_ARROW:
+        checkArray = upCheckList;
+        break;
+      case DOWN_ARROW:
+        checkArray = downCheckList;
+        break;
       default:
         return false;
     }
 
     checkArray.forEach(checkInfo => {
-      const tileIndex = checkInfo.index;
-      const tilesToCheck = checkInfo.toCheck;
-      if (this.tiles[tileIndex] === null) {
-        let newTileValue: number;
-        for (let newTileIndex of tilesToCheck) {
-          newTileValue = this.tiles[newTileIndex];
-          if (newTileValue !== null) {
-            this.tiles[tileIndex] = newTileValue;
-            this.tiles[newTileIndex] = null;
-            tilesMoved = true;
+      const sourceIndex: number = checkInfo.index;
+      const sourceTileValue: number = this.tiles[sourceIndex];
+      let doubled: boolean = false;
+
+      if (sourceTileValue !== null) {
+        const tilesToCheck: number[] = checkInfo.toCheck;
+        let targetTileValue: number;
+        let emptyTileIndex: number = null;
+
+        for (
+          let checkIndex = 0;
+          checkIndex < tilesToCheck.length;
+          checkIndex++
+        ) {
+          const targetTileIndex = tilesToCheck[checkIndex];
+          targetTileValue = this.tiles[targetTileIndex];
+          if (targetTileValue !== null) {
+            if (targetTileValue === sourceTileValue) {
+              this.tiles[targetTileIndex] = sourceTileValue * 2;
+              this.tiles[sourceIndex] = null;
+              tilesMoved = true;
+              doubled = true;
+            }
             break;
           }
+          emptyTileIndex = targetTileIndex;
+        }
+        if (!doubled && emptyTileIndex !== null) {
+          this.tiles[emptyTileIndex] = sourceTileValue;
+          this.tiles[sourceIndex] = null;
+          tilesMoved = true;
         }
       }
     });
