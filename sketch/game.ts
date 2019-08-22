@@ -13,7 +13,7 @@ class Game {
     for (let i = 0; i < 16; i++) {
       this.tiles[i] = null;
     }
-    const index = Math.floor(Math.random() * 16);
+    const index: number = Math.floor(Math.random() * 16);
     this.tiles[index] = 2;
     textAlign(CENTER);
     textSize(this.tileSize / 3);
@@ -28,10 +28,10 @@ class Game {
   }
 
   private drawTile(tileValue: number, index: number) {
-    const x = this.x + this.tileSize * (index % 4);
-    const y = this.y + this.tileSize * Math.floor(index / 4);
+    const x: number = this.x + this.tileSize * (index % 4);
+    const y: number = this.y + this.tileSize * Math.floor(index / 4);
     if (tileValue !== null) {
-      const greenValue = 255 - (20 * Math.log(tileValue)) / Math.log(2);
+      const greenValue: number = 255 - (20 * Math.log(tileValue)) / Math.log(2);
       fill(255, greenValue, 0);
     } else {
       fill("lightgray");
@@ -91,7 +91,7 @@ class Game {
           checkIndex < tilesToCheck.length;
           checkIndex++
         ) {
-          const targetTileIndex = tilesToCheck[checkIndex];
+          const targetTileIndex: number = tilesToCheck[checkIndex];
           targetTileValue = this.tiles[targetTileIndex];
           if (targetTileValue !== null) {
             if (targetTileValue === sourceTileValue) {
@@ -111,24 +111,6 @@ class Game {
         }
       }
     });
-
-    // for (let tileIndex = 0; tileIndex < this.tiles.length; tileIndex++) {
-    //   if (this.tiles[tileIndex] !== null) {
-    //     continue;
-    //   }
-    //   let newTileIndex: number = tileIndex;
-    //   let newTileValue: number;
-    //   while (newTileIndex % 4 !== 3) {
-    //     newTileIndex++;
-    //     newTileValue = this.tiles[newTileIndex];
-    //     if (newTileValue !== null) {
-    //       this.tiles[tileIndex] = newTileValue;
-    //       this.tiles[newTileIndex] = null;
-    //       tilesMoved = true;
-    //       break;
-    //     }
-    //   }
-    // }
 
     return tilesMoved;
   }
