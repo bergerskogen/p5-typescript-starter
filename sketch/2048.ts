@@ -1,4 +1,4 @@
-class Game {
+class TwentyFortyeight {
 	tiles: number[]
 	tileSize: number
 	x: number

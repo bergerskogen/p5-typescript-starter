@@ -1,7 +1,7 @@
-let game: Game
+let game: TwentyFortyeight
 function setup() {
 	createCanvas(windowWidth, windowHeight)
-	game = new Game()
+	game = new TwentyFortyeight()
 	game.setup()
 }
 
