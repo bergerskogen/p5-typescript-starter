@@ -51,7 +51,7 @@ class TwentyFortyeight {
 		this.draw()
 	}
 
-	moveTiles(direction: number): boolean {
+	private moveTiles(direction: number): boolean {
 		let tilesMoved: boolean = false
 
 		let checkArray: any[]
